@@ -2,6 +2,7 @@ package com.atguigu.spzx.manager;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.ComponentScan;
 
 /**
  * ClassName: MangerApplication
@@ -14,6 +15,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 
 @SpringBootApplication
+@ComponentScan(basePackages = {"com.atguigu.spzx"})
 public class MangerApplication {//创建启动类
 
     public static void main(String[] args) {
