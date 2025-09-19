@@ -2,6 +2,7 @@ package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.manager.service.ValidateCodeService;
 import com.atguigu.spzx.model.dto.system.LoginDto;
+import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.model.vo.system.LoginVo;
@@ -10,10 +11,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import com.atguigu.spzx.manager.service.SysUserService;
 /**
  * ClassName: IndexController
@@ -31,12 +30,34 @@ import com.atguigu.spzx.manager.service.SysUserService;
 @RequestMapping(value = "/admin/system/index")
 public class IndexController {
 
+    @Autowired
     @Resource
     private SysUserService sysUserService;
 
     @Resource
     private ValidateCodeService validateCodeService;
+    
+    //用户退出
+    @GetMapping(value = "/logout")
+    public Result logout(@RequestHeader(name = "token")String token){
 
+        sysUserService.logout(token);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+
+    }
+
+    //获取当前登录的用户信息
+    @GetMapping(value = "/getUserInfo")
+    public Result<Void> getUserInfo(@RequestHeader(name = "token")String token){
+
+        //从请求头里获取token
+
+        //根据token查询redis，获取用户信息
+        SysUser sysUser = sysUserService.getUserInfo(token);
+
+        //用户信息返回
+        return Result.build(sysUser,ResultCodeEnum.SUCCESS);
+    }
 
     //生成图片的验证码
     @GetMapping(value = "/generateValidateCode")
