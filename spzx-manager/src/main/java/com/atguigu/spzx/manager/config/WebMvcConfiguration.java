@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.config;
 
 import com.atguigu.spzx.manager.interceptor.LoginAuthInterceptor;
+import com.atguigu.spzx.manager.properties.UserProperties;
 import jakarta.annotation.Resource;
 
 import org.springframework.stereotype.Component;
@@ -26,12 +27,15 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Resource
     private LoginAuthInterceptor loginAuthInterceptor;
 
+    @Resource
+    private UserProperties userProperties;
     //拦截器的注册
     @Override
     public void addInterceptors(InterceptorRegistry registry){
         registry.addInterceptor(loginAuthInterceptor)
-                .excludePathPatterns("/admin/system/index/login",
-                        "/admin/system/index/generateValidateCode")
+//                .excludePathPatterns("/admin/system/index/login",
+//                        "/admin/system/index/generateValidateCode")
+                .excludePathPatterns(userProperties.getNoAuthUrls())
                 .addPathPatterns("/**");
     }
 

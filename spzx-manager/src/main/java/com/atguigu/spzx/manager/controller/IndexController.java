@@ -7,6 +7,7 @@ import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.model.vo.system.LoginVo;
 import com.atguigu.spzx.model.vo.system.ValidateCodeVo;
+import com.atguigu.spzx.utils.AuthContextUtil;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -30,7 +31,7 @@ import com.atguigu.spzx.manager.service.SysUserService;
 @RequestMapping(value = "/admin/system/index")
 public class IndexController {
 
-    @Autowired
+
     @Resource
     private SysUserService sysUserService;
 
@@ -48,16 +49,18 @@ public class IndexController {
 
     //获取当前登录的用户信息
     @GetMapping(value = "/getUserInfo")
-    public Result<Void> getUserInfo(@RequestHeader(name = "token")String token){
-
-        //从请求头里获取token
-
-        //根据token查询redis，获取用户信息
-        SysUser sysUser = sysUserService.getUserInfo(token);
-
-        //用户信息返回
-        return Result.build(sysUser,ResultCodeEnum.SUCCESS);
+    public Result<Void> getUserInfo(){
+        return Result.build(AuthContextUtil.get(),ResultCodeEnum.SUCCESS);
     }
+//
+//        //从请求头里获取token
+//
+//        //根据token查询redis，获取用户信息
+//        SysUser sysUser = sysUserService.getUserInfo(token);
+//
+//        //用户信息返回
+//        return Result.build(sysUser,ResultCodeEnum.SUCCESS);
+//    }
 
     //生成图片的验证码
     @GetMapping(value = "/generateValidateCode")
