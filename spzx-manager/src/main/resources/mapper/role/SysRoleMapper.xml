@@ -8,16 +8,64 @@
 
     <!-- 用于select查询公用抽取的列 -->
     <sql id="columns">
-        id,role_name,role_code,description,create_time,update_time,is_deleted
+        id,
+        role_name,
+        role_code,
+        description,
+        create_time,
+        update_time,
+        is_deleted
     </sql>
+    <!--//角色删除的方法-->
+    <update id="delete">
+        update schema_name.sys_role set is_deleted =1 where id=#{roleId}
+
+    </update>
+
+
+
+    <!--//角色修改的方法-->
+    <update id="update">
+        update sys_role set
+        <if test="roleName != null and roleName != ''">
+            role_name = #{roleName},
+        </if>
+        <if test="roleCode != null and roleCode != ''">
+            role_code = #{roleCode},
+        </if>
+        <if test="description != null and description != ''">
+            description = #{description},
+        </if>
+        update_time =  now()
+        where
+        id = #{id}
+    </update>
+    <!--角色添加方法-->
+    <insert id="save">
+        insert into schema_name.sys_role (
+            id,
+            role_name,
+            role_code,
+            description
+        ) values (
+                     #{id},
+                     #{roleName},
+                     #{roleCode},
+                     #{description}
+                 )
+    </insert>
+
+
+    <!--角色查询方法-->
 <select id="findByPage" resultMap ="sysRoleMap">
-    select <include refid="colum"/>
+    select
+    <include refid="columns"/>
     from schema_name.sys_role
     <where>
-    <if test="roleName ! =null and roleName ! =''">
-        and role_name like concat('%',#{roleName},'%')
-    </if>
-
+        <if test="roleName != null and roleName ! =''">
+            and role_name like concat('%',#{roleName},'%')
+        </if>
+        and is_deleted =0
     </where>
     order by id desc
 </select>

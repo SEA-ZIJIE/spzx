@@ -21,5 +21,13 @@ public interface SysRoleService {
     //角色列表方法
     PageInfo<SysRole> findByPage(SysRoleDto sysRoleDto, Integer current, Integer limit);
 
+    //角色添加方法
+    void saveSysRole(SysRole sysRole);
+
+    //角色修改的方法
+    void updateSysRole(SysRole sysRole);
+
+    //角色删除的方法
+    void deleteById(Long roleId);
 
 }

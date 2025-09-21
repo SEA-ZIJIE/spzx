@@ -32,7 +32,30 @@ public class SysRoleController {
     private SysRoleService sysRoleService;
 
 
-    //角色列表方法
+    //4角色删除的方法
+    @DeleteMapping("deleteById/{roleId}")
+    public Result deleteById(@PathVariable("roleId")Long roleId){
+        sysRoleService.deleteById(roleId);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+
+    }
+
+    //3 角色修改的方法
+    @PutMapping("/updateSysRole")
+    public Result updateSysRole(@RequestBody SysRole sysRole){
+
+        sysRoleService.updateSysRole(sysRole);
+        return Result.build(null,ResultCodeEnum.SUCCESS);
+    }
+
+    // 2 角色添加的方法
+
+    @PostMapping(value = "/saveSysRole")
+    public Result<Void> saveSysRole(@RequestBody SysRole SysRole) {
+        sysRoleService.saveSysRole(SysRole) ;
+        return Result.build(null , ResultCodeEnum.SUCCESS) ;
+    }
+    //1 角色列表方法
     // current：当前页  limit：每页显示记录数  SysRoleDto 条件角色的名称
     @PostMapping("/findByPage/{current}/{limit}")
     public Result findByPage(@PathVariable("current")Integer current,
