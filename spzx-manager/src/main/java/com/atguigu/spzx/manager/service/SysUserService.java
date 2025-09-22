@@ -1,8 +1,10 @@
 package com.atguigu.spzx.manager.service;
 
 import com.atguigu.spzx.model.dto.system.LoginDto;
+import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.vo.system.LoginVo;
+import com.github.pagehelper.PageInfo;
 
 /**
  * ClassName: SysUserService
@@ -25,4 +27,18 @@ public interface SysUserService {
 
     //用户退出
     void logout(String token);
+
+    //1 用户条件分页查询接口
+    PageInfo<SysUser> findByPage(Integer pageNum, Integer pageSize, SysRoleDto sysUserDto);
+
+    //2 用户的添加
+    void saveSysUser(SysUser sysUser);
+
+    //3 用户的修改
+
+    void updateSysUser(SysUser sysUser);
+    //4 用户的删除
+
+    void deleteById(long userId);
+
 }

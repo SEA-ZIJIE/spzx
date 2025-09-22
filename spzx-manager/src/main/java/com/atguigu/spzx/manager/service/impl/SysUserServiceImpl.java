@@ -6,15 +6,20 @@ import com.atguigu.spzx.common.exception.GuiguException;
 import com.atguigu.spzx.manager.mapper.SysUserMapper;
 import com.atguigu.spzx.manager.service.SysUserService;
 import com.atguigu.spzx.model.dto.system.LoginDto;
+import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.model.vo.system.LoginVo;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.PutMapping;
 
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
@@ -113,5 +118,46 @@ public class SysUserServiceImpl implements SysUserService {
     @Override
     public void logout(String token) {
         redisTemplate.delete("user:login" + token);
+    }
+    //1 用户条件分页查询接口
+    @Override
+    public PageInfo<SysUser> findByPage(Integer pageNum,
+                                        Integer pageSize,
+                                        SysRoleDto sysUserDto) {
+        PageHelper.startPage(pageNum, pageSize);
+        List<SysUser> list = sysUserMapper.findByPage(sysUserDto);
+        PageInfo<SysUser> pageInfo = new PageInfo<>(list);
+        return pageInfo;
+    }
+    //2 用户的添加
+    @Override
+    public void saveSysUser(SysUser sysUser) {
+        //判断用户名不能重复
+        String userName = sysUser.getUserName();
+        SysUser dbSysUser = sysUserMapper.selectUserInfoByUserName(userName);
+        if (dbSysUser != null) {
+            throw new GuiguException(ResultCodeEnum.USER_NAME_IS_EXISTS);
+        }
+        // 输入密码进行加密
+        String md5_password = DigestUtils.md5DigestAsHex(sysUser.getPassword().getBytes());
+        sysUser.setPassword(md5_password);
+
+        //设置status值
+        sysUser.setStatus(1);
+        sysUserMapper.save(sysUser);
+    }
+    //3 用户的修改
+
+    @Override
+    public void updateSysUser(SysUser sysUser) {
+        sysUserMapper.update(sysUser);
+    }
+
+    @Override
+    public void deleteById(long userId) {
+        sysUserMapper.delete(userId);
+
+
+
     }
 }
