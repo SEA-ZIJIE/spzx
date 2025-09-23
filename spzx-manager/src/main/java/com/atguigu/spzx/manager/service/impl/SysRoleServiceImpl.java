@@ -17,7 +17,9 @@ import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class SysRoleServiceImpl implements SysRoleService {
@@ -59,5 +61,18 @@ public class SysRoleServiceImpl implements SysRoleService {
 
 
 
+    }
+    //查询所有角色
+    @Override
+    public Map<String, Object> findAll() {
+    //查询所有的角色
+    List<SysRole> roleList = sysRoleMapper.findAll();
+    //分配过的角色列表
+        Map<String , Object> map = new HashMap<>();
+        map.put("allRolesList" , roleList) ;
+
+
+
+        return map;
     }
 }

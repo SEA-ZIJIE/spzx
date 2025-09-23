@@ -10,6 +10,8 @@ import com.atguigu.spzx.model.vo.common.Result;
 
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 
 /**
  * ClassName: SysRoleController
@@ -30,7 +32,12 @@ public class SysRoleController {
 
     @Resource
     private SysRoleService sysRoleService;
-
+    //查询所有角色
+    @GetMapping("/findAllRoles")
+    public Result findAllRoles(){
+        Map<String,Object> map = sysRoleService.findAll();
+        return Result.build(map,ResultCodeEnum.SUCCESS);
+    }
 
     //4角色删除的方法
     @DeleteMapping("deleteById/{roleId}")
