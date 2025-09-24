@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.manager.service.SysUserService;
+import com.atguigu.spzx.model.dto.system.AssginRoleDto;
 import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.vo.common.Result;
@@ -55,6 +56,14 @@ public class SysUserController {
     public Result<Void> deleteById(@PathVariable("userId") long userId){
         sysUserService.deleteById(userId);
         return Result.build(null, ResultCodeEnum.SUCCESS);
+    }
+    //用户分配角色
+    // 保存分配的数据
+    @PostMapping("/doAssign")
+    public Result<Void> doAssign(@RequestBody AssginRoleDto assginRoleDto){
+        sysUserService.doAssign(assginRoleDto);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+
     }
 
 }

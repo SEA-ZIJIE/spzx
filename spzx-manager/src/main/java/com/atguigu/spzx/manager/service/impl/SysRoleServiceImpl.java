@@ -9,6 +9,7 @@ package com.atguigu.spzx.manager.service.impl;/**
  */
 
 import com.atguigu.spzx.manager.mapper.SysRoleMapper;
+import com.atguigu.spzx.manager.mapper.SysRoleUserMapper;
 import com.atguigu.spzx.manager.service.SysRoleService;
 import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysRole;
@@ -26,6 +27,9 @@ public class SysRoleServiceImpl implements SysRoleService {
 
     @Resource
     private SysRoleMapper sysRoleMapper;
+
+    @Resource
+    private SysRoleUserMapper sysRoleUserMapper;
     //角色列表的方法
 
     @Override
@@ -64,15 +68,16 @@ public class SysRoleServiceImpl implements SysRoleService {
     }
     //查询所有角色
     @Override
-    public Map<String, Object> findAll() {
+    public Map<String, Object> findAll(Long userId) {
     //查询所有的角色
     List<SysRole> roleList = sysRoleMapper.findAll();
     //分配过的角色列表
+        // 根据用户id查询用户分配过的角色id列表
+        List<Long> roleIds = sysRoleUserMapper.selectRoleIdsByUserId(userId);
+
         Map<String , Object> map = new HashMap<>();
         map.put("allRolesList" , roleList) ;
-
-
-
+        map.put("sysUserRoles" , roleIds);
         return map;
     }
 }

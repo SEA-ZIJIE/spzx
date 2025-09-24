@@ -33,9 +33,9 @@ public class SysRoleController {
     @Resource
     private SysRoleService sysRoleService;
     //查询所有角色
-    @GetMapping("/findAllRoles")
-    public Result findAllRoles(){
-        Map<String,Object> map = sysRoleService.findAll();
+    @GetMapping("/findAllRoles/{userId}")
+    public Result findAllRoles(@PathVariable("userId") Long userId){
+        Map<String,Object> map = sysRoleService.findAll(userId);
         return Result.build(map,ResultCodeEnum.SUCCESS);
     }
 

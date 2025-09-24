@@ -18,8 +18,8 @@
     </sql>
 
 <!--    //查询所有角色-->
-    <select id="findAll"resultMap="sysRoleMap">
-select <include refid="columns">
+    <select id="findAll" resultMap="sysRoleMap">
+select <include refid="columns"/>
         from schema_name.sys_role where is_deleted = 0
 
 
