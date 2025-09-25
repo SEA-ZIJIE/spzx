@@ -22,6 +22,15 @@ public interface SysMenuMapper {
     //查询所有菜单，返回 list集合
     List<SysMenu> findAll();
 
+    //菜单添加
+    void save(SysMenu sysMenu);
 
+    //菜单修改
+    void update(SysMenu sysMenu);
 
+    //根据当前菜单id，查询是否包含子菜单
+    int selectCountById(Long id);
+
+    //count等于0，直接删除
+    void delete(Long id);
 }

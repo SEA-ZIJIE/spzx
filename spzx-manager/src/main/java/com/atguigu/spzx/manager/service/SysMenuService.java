@@ -18,5 +18,10 @@ import java.util.List;
 public interface SysMenuService {
     //菜单列表
     List<SysMenu> findNodes();
-
+    //菜单添加
+    void save(SysMenu sysMenu);
+    //菜单修改
+    void update(SysMenu sysMenu);
+    //菜单的删除
+    void removeById(Long id);
 }

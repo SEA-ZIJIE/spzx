@@ -8,10 +8,12 @@ package com.atguigu.spzx.manager.service.impl;/**
  * @Version 1.0
  */
 
+import com.atguigu.spzx.common.exception.GuiguException;
 import com.atguigu.spzx.manager.mapper.SysMenuMapper;
 import com.atguigu.spzx.manager.service.SysMenuService;
 import com.atguigu.spzx.manager.utils.MenuHelper;
 import com.atguigu.spzx.model.entity.system.SysMenu;
+import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
@@ -39,5 +41,30 @@ private SysMenuMapper  sysMenuMapper;
 
 
         return treeList;
+    }
+
+    //菜单添加
+    @Override
+    public void save(SysMenu sysMenu) {
+        sysMenuMapper.save(sysMenu);
+    }
+
+    //菜单修改
+    @Override
+    public void update(SysMenu sysMenu) {
+        sysMenuMapper.update(sysMenu);
+
+    }
+    //菜单的删除
+    @Override
+    public void removeById(Long id) {
+        //根据当前菜单id，查询是否包含子菜单
+        int count = sysMenuMapper.selectCountById(id);
+        //判断count大于0，包含子菜单
+        if(count > 0) {
+            throw new GuiguException(ResultCodeEnum.LOGIN_ERROR);
+        }
+        //count等于0，直接删除
+        sysMenuMapper.delete(id);
     }
 }
