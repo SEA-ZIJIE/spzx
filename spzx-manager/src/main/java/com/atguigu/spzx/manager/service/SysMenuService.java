@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.service;
 
 import com.atguigu.spzx.model.entity.system.SysMenu;
+import com.atguigu.spzx.model.vo.system.SysMenuVo;
 
 import java.util.List;
 
@@ -24,4 +25,6 @@ public interface SysMenuService {
     void update(SysMenu sysMenu);
     //菜单的删除
     void removeById(Long id);
+    //查询用户可以操作的菜单
+    List<SysMenuVo> findMenuByUserId();
 }

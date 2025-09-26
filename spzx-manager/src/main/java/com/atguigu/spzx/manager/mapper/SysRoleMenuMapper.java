@@ -24,4 +24,7 @@ public interface SysRoleMenuMapper {
 
     //保存分配的数据
     void doAssign(AssginMenuDto assginMenuDto);
+
+    // 将该id的菜单设置为半开
+    void updateSysRoleMenuIsHalf(Long menuid);
 }

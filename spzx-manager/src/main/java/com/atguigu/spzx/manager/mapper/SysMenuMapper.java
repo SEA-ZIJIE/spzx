@@ -33,4 +33,11 @@ public interface SysMenuMapper {
 
     //count等于0，直接删除
     void delete(Long id);
+
+
+    //查询用户可以操作的菜单
+    List<SysMenu> findMenuByUserId(Long userId);
+
+    //新添加子菜单，把父菜单isHalf改为半开状态1
+    SysMenu selectParentMenu(Long parentId);
 }
