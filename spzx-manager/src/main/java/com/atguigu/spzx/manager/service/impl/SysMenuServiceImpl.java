@@ -101,10 +101,10 @@ public class SysMenuServiceImpl implements SysMenuService {
         Long userId = sysUser.getId();
 
         //根据用户id查询可以操作的菜单
-        List<SysMenu> sysMenuList = sysMenuMapper.findMenuByUserId(userId);
+
         // 封装成要求数据格式返回
-        List<SysMenu> sysmenuList = MenuHelper.buildTree(sysMenuList);
-        List<SysMenuVo> sysMenuVos = this.buildMenus(sysmenuList);
+        List<SysMenu> sysMenuList = MenuHelper.buildTree(sysMenuMapper.findMenuByUserId(userId));
+        List<SysMenuVo> sysMenuVos = this.buildMenus(sysMenuList);
 
 
         return sysMenuVos;
