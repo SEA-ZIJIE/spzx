@@ -3,6 +3,8 @@ package com.atguigu.spzx.manager.service;
 import com.atguigu.spzx.model.entity.product.Brand;
 import com.github.pagehelper.PageInfo;
 
+import java.util.List;
+
 /**
  * ClassName: BrandService
  * Package: com.atguigu.spzx.manager.service
@@ -21,4 +23,7 @@ public interface BrandService {
 
     //添加
     void save(Brand brand);
+
+    //查询所有品牌
+    List<Brand> FindAll();
 }

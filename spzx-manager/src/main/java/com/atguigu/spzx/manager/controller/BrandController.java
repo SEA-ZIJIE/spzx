@@ -8,6 +8,8 @@ import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 /**
  * ClassName: BrandController
  * Package: com.atguigu.spzx.manager.controller
@@ -23,6 +25,13 @@ import org.springframework.web.bind.annotation.*;
 public class BrandController {
     @Resource
     private BrandService brandService;
+
+    //查询所有品牌
+    @GetMapping("/findAll")
+    public Result findAll(){
+        List<Brand> list = brandService.FindAll();
+        return Result.build(list,ResultCodeEnum.SUCCESS);
+    }
     //列表
     @GetMapping("/{page}/{limit}")
     public Result<Void> list (@PathVariable Integer page

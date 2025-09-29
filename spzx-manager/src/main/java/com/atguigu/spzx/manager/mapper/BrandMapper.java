@@ -23,4 +23,8 @@ public interface BrandMapper {
 
     //添加
     void save(Brand brand);
+
+    //查询所有品牌
+    List<Brand> findAll();
+
 }

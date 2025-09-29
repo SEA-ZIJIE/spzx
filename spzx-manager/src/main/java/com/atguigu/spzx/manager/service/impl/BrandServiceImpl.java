@@ -41,4 +41,10 @@ public class BrandServiceImpl implements BrandService {
     public void save(Brand brand) {
         brandMapper.save(brand);
     }
+
+    //查询所有品牌
+    @Override
+    public List<Brand> FindAll() {
+        return  brandMapper.findAll();
+    }
 }
