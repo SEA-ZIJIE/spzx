@@ -11,7 +11,7 @@
 <!--    //分类品牌的条件分页查询-->
 <select id="findByPage" resultMap="categoryBrandMap">
 select cb.*,
-       c.name AS categoryName
+       c.name AS categoryName，
        b.name ASbrandName,b.logo
 FROM schema_name.category cb
 inner join schema_name.category_brand c on c.id = cb.category_id
