@@ -1,7 +1,6 @@
 package com.atguigu.spzx.manager.controller;
 
 import com.atguigu.spzx.manager.service.ProductSpecService;
-import com.atguigu.spzx.model.entity.product.Product;
 import com.atguigu.spzx.model.entity.product.ProductSpec;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
@@ -42,7 +41,7 @@ public class ProductSpecController {
     }
     //修改
     @PostMapping("/updateById")
-    public Result<Void> save(@RequestBody ProductSpec productSpec){
+    public Result<Void> updateById(@RequestBody ProductSpec productSpec){
         productSpecService.updateById(productSpec);
         return Result.build(null, ResultCodeEnum.SUCCESS);
 

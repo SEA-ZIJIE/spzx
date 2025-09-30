@@ -5,7 +5,6 @@ import com.alibaba.excel.read.listener.ReadListener;
 import com.alibaba.excel.util.ListUtils;
 import com.atguigu.spzx.manager.mapper.CategoryMapper;
 import com.atguigu.spzx.model.vo.product.CategoryExcelVo;
-import org.apache.poi.ss.formula.functions.T;
 
 import java.util.List;
 
@@ -20,7 +19,7 @@ import java.util.List;
  */
 
 //监听器
-public class ExcelListener implements ReadListener<T> {
+public class ExcelListener implements ReadListener<CategoryExcelVo> {
 
     /**
      * 每隔5条存储数据库，实际使用中可以100条，然后清理list ，方便内存回收
@@ -29,7 +28,7 @@ public class ExcelListener implements ReadListener<T> {
     /**
      * 缓存的数据
      */
-    private List<T> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
+    private List<CategoryExcelVo> cachedDataList = ListUtils.newArrayListWithExpectedSize(BATCH_COUNT);
 
     //构造传递mapper，操作数据库
     private CategoryMapper categoryMapper;
@@ -40,7 +39,7 @@ public class ExcelListener implements ReadListener<T> {
     }
     //从第二行开始读取，把每行读取内容封装到对象中
     @Override
-    public void invoke(T t, AnalysisContext analysisContext) {
+    public void invoke(CategoryExcelVo t, AnalysisContext analysisContext) {
         //把每行数据对象t放到list集合里面
         cachedDataList.add(t);
         if (cachedDataList.size() >= BATCH_COUNT) {

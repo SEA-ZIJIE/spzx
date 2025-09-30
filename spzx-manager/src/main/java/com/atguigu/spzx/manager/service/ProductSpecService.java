@@ -1,6 +1,8 @@
 package com.atguigu.spzx.manager.service;
 
 import com.atguigu.spzx.model.entity.product.ProductSpec;
+import com.github.pagehelper.PageInfo;
+import org.springframework.stereotype.Service;
 
 /**
  * ClassName: ProductSpecService
@@ -23,4 +25,6 @@ public interface ProductSpecService {
 
     //删除
     void deleteById(Long id);
+    //列表
+    PageInfo<ProductSpec> findByPage(Integer page, Integer limit);
 }

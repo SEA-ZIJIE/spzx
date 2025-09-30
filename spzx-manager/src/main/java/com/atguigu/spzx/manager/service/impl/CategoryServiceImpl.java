@@ -12,6 +12,7 @@ import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -29,7 +30,7 @@ import java.util.List;
  * @Version 1.0
  */
 
-
+@Service
 public class CategoryServiceImpl implements CategoryService {
 
     @Resource

@@ -7,6 +7,7 @@ import com.atguigu.spzx.model.entity.product.CategoryBrand;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
@@ -20,7 +21,7 @@ import java.util.List;
  * @Version 1.0
  */
 
-
+@Service
 public class CategoryBrandServiceImpl implements CategoryBrandService {
     @Resource
     private CategoryBrandMapper categoryBrandMapper;

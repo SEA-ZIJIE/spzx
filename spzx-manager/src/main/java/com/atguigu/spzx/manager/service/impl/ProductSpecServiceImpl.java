@@ -14,12 +14,13 @@ import com.atguigu.spzx.model.entity.product.ProductSpec;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import jakarta.annotation.Resource;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 import static net.sf.jsqlparser.parser.feature.Feature.limit;
 
-
+@Service
 public class ProductSpecServiceImpl implements ProductSpecService {
 
 
