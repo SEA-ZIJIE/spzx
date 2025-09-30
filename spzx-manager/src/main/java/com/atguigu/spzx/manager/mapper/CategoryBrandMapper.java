@@ -18,7 +18,11 @@ import java.util.List;
 @Mapper
 public interface CategoryBrandMapper {
     //分类品牌的条件分页查询
-   List<CategoryBrand> findByPage(CategoryBrandDto categoryBrandDto) {
+   List<CategoryBrand> findByPage(CategoryBrandDto categoryBrandDto);
 
-    }
+
+
+    //添加
+    void save(CategoryBrand categoryBrand);
+
 }

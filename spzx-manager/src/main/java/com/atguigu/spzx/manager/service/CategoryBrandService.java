@@ -19,4 +19,6 @@ public interface CategoryBrandService {
     //分类品牌的条件分页查询
     PageInfo<CategoryBrand> findByPage(Integer page, Integer limit, CategoryBrandDto categoryBrandDto);
 
+    //添加
+    void save(CategoryBrand categoryBrand);
 }

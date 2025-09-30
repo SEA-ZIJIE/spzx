@@ -33,9 +33,11 @@ public class CategoryBrandServiceImpl implements CategoryBrandService {
         PageHelper.startPage(page, limit);
         List<CategoryBrand> list =  categoryBrandMapper.findByPage(categoryBrandDto);
         PageInfo<CategoryBrand> pageInfo = new PageInfo<>(list);
-
-
-
         return pageInfo;
+    }
+    //添加
+    @Override
+    public void save(CategoryBrand categoryBrand) {
+        categoryBrandMapper.save(categoryBrand);
     }
 }

@@ -8,6 +8,26 @@
     <sql id="columns">
         id,brand_id,category_id,create_time,update_time,is_deleted
     </sql>
+
+<!--    //添加-->
+    <insert id="save">
+        insert into schema_name.category_brand (
+            id,
+            brand_id,
+            category_id,
+            create_time,
+            update_time ,
+            is_deleted
+        ) values (
+                     #{id},
+                     #{brandId},
+                     #{categoryId},
+                     now(),
+                     now(),
+                     0
+                 )
+    </insert>
+
 <!--    //分类品牌的条件分页查询-->
 <select id="findByPage" resultMap="categoryBrandMap">
 select cb.*,
