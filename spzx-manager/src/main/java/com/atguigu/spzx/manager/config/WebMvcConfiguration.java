@@ -29,14 +29,14 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     @Resource
     private UserProperties userProperties;
     //拦截器的注册
-    @Override
-    public void addInterceptors(InterceptorRegistry registry){
-        registry.addInterceptor(loginAuthInterceptor)
-//                .excludePathPatterns("/admin/system/index/login",
-//                        "/admin/system/index/generateValidateCode")
-                .excludePathPatterns(userProperties.getNoAuthUrls())
-                .addPathPatterns("/**");
-    }
+//    @Override
+//    public void addInterceptors(InterceptorRegistry registry){
+//        registry.addInterceptor(loginAuthInterceptor)
+////                .excludePathPatterns("/admin/system/index/login",
+////                        "/admin/system/index/generateValidateCode")
+//                .excludePathPatterns(userProperties.getNoAuthUrls())
+//                .addPathPatterns("/**");
+//    }
 
     //跨域解决方法
     @Override
@@ -48,4 +48,20 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
                 .allowedMethods("*")
                 .allowedHeaders("*") ;                // 允许所有的请求头
     }
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new LoginAuthInterceptor())
+                .excludePathPatterns(
+                        "/doc.html",
+                        "/webjars/**",
+                        "/swagger-resources/**",
+                        "/v3/**",
+                        "/favicon.ico",
+                        "/error"
+                );
+    }
+
+
+
+
 }
