@@ -9,6 +9,7 @@ import com.atguigu.spzx.utils.AuthContextUtil;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.lang.Nullable;
 import org.springframework.stereotype.Component;
@@ -28,12 +29,15 @@ import java.util.concurrent.TimeUnit;
  * @Version 1.0
  */
 
-@Component
 public class LoginAuthInterceptor implements HandlerInterceptor {
 
 
-    @Resource
-    private RedisTemplate<String,String>redisTemplate;
+
+    private RedisTemplate<String, String> redisTemplate;
+
+    public void setRedisTemplate(RedisTemplate<String, String> redisTemplate) {
+        this.redisTemplate = redisTemplate;
+    }
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -46,7 +50,7 @@ public class LoginAuthInterceptor implements HandlerInterceptor {
 
         // 2 从请求头里面获取token
 
-        String token = request.getHeader("token");
+        String token = request.getHeader("Authorization");
 
         // 3 token为空，返回错误提示
 
@@ -72,7 +76,7 @@ public class LoginAuthInterceptor implements HandlerInterceptor {
         AuthContextUtil.set(sysUser);
 
         // 7 把redis用户信息数据更新过期时间
-        redisTemplate.expire("user:login"+token,30, TimeUnit.MINUTES);
+        redisTemplate.expire("user:login:"+token,30, TimeUnit.MINUTES);
 
         // 8 放行
 

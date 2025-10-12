@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourcePerFileMappings">
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/f349b3de-c78d-45df-90fc-b9021d882349/console.sql" value="f349b3de-c78d-45df-90fc-b9021d882349" />
+    <file url="file://$APPLICATION_CONFIG_DIR$/consoles/db/f349b3de-c78d-45df-90fc-b9021d882349/console_1.sql" value="f349b3de-c78d-45df-90fc-b9021d882349" />
+    <file url="file://$PROJECT_DIR$/spzx-manager/src/main/resources/mapper/order/OrderInfoMapper.xml" value="f349b3de-c78d-45df-90fc-b9021d882349" />
+  </component>
+</project>

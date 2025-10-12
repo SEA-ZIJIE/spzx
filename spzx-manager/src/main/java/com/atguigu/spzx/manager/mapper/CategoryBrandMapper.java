@@ -1,6 +1,7 @@
 package com.atguigu.spzx.manager.mapper;
 
 import com.atguigu.spzx.model.dto.product.CategoryBrandDto;
+import com.atguigu.spzx.model.entity.product.Brand;
 import com.atguigu.spzx.model.entity.product.CategoryBrand;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -24,5 +25,8 @@ public interface CategoryBrandMapper {
 
     //添加
     void save(CategoryBrand categoryBrand);
+
+    //根据id查询对应的品牌数据
+    List<Brand> findBrandByCategoryId(Long categoryId);
 
 }

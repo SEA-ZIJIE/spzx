@@ -6,6 +6,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
  * ClassName: MangerApplication
@@ -20,6 +21,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @ComponentScan(basePackages = {"com.atguigu.spzx"})
 @EnableConfigurationProperties(value = {UserProperties.class, MinioProperties.class})
+@EnableScheduling
 public class MangerApplication {//创建启动类
 
     public static void main(String[] args) {

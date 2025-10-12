@@ -5,6 +5,7 @@ import com.atguigu.spzx.model.dto.system.SysRoleDto;
 import com.atguigu.spzx.model.entity.system.SysRole;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.github.pagehelper.PageInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import com.atguigu.spzx.model.vo.common.Result;
 
@@ -23,7 +24,7 @@ import java.util.Map;
  * @Version 1.0
  */
 
-
+@Tag(name = "角色管理")
 @RestController
 @RequestMapping(value = "/admin/system/sysRole")
 public class SysRoleController {

@@ -5,6 +5,7 @@ import com.atguigu.spzx.manager.service.SysRoleMenuService;
 import com.atguigu.spzx.model.dto.system.AssginMenuDto;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.util.Map;
  * @Create 2025/9/25 8:29
  * @Version 1.0
  */
-
+@Tag(name = "分配菜单")
 @RestController
 @RequestMapping(value = "/admin/system/sysRoleMenu")
 public class SysRoleMenuController {

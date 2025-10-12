@@ -62,15 +62,15 @@ public class SysUserServiceImpl implements SysUserService {
 
         //3.比较输入的验证码和redis存储的验证码是否一致
 
-        if (StringUtils.isEmpty(redisCode) || !StrUtil.equalsIgnoreCase(redisCode,captcha)) {
-
-            throw new GuiguException(ResultCodeEnum.VALIDATECODE_ERROR);
-
-        }
+//        if (StringUtils.isEmpty(redisCode) || !StrUtil.equalsIgnoreCase(redisCode,captcha)) {
+//
+//            throw new GuiguException(ResultCodeEnum.VALIDATECODE_ERROR);
+//
+//        }
         //4.如果不一致，提示用户，校验失败
 
         //5，如果一致，删除redis里面的验证码
-        redisTemplate.delete("user:validate" + key);
+//        redisTemplate.delete("user:validate" + key);
 
 
         //1.获取用户名，loginDto获取
@@ -103,7 +103,7 @@ public class SysUserServiceImpl implements SysUserService {
         //8.把登录成功用户信息放到redis里面
 
         JSON.toJSONString(sysUser);
-        redisTemplate.opsForValue().set("user:login" + token,
+        redisTemplate.opsForValue().set("user:login:" + token,
                 JSON.toJSONString(sysUser),
                 7, TimeUnit.DAYS);
         //返回loginvo对象

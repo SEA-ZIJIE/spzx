@@ -4,6 +4,7 @@ import com.atguigu.spzx.manager.interceptor.LoginAuthInterceptor;
 import com.atguigu.spzx.manager.properties.UserProperties;
 import jakarta.annotation.Resource;
 
+import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -20,12 +21,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 
 @Component
+@SuppressWarnings("all")
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
 
-    @Resource
-    private LoginAuthInterceptor loginAuthInterceptor;
 
+    @Resource
+    private RedisTemplate<String, String> redisTemplate;
     @Resource
     private UserProperties userProperties;
     //拦截器的注册
@@ -50,8 +52,13 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     }
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoginAuthInterceptor())
+        LoginAuthInterceptor loginAuthInterceptor = new LoginAuthInterceptor();
+        loginAuthInterceptor.setRedisTemplate(redisTemplate);
+
+
+        registry.addInterceptor(loginAuthInterceptor)
                 .excludePathPatterns(
+                        "/admin/system/index/**",
                         "/doc.html",
                         "/webjars/**",
                         "/swagger-resources/**",

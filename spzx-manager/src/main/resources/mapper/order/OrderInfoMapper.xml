@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.atguigu.spzx.manager.mapper.OrderInfoMapper">
+
+<!--    //统计前一天交易的金额-->
+    <select id="selectStatisticsByDate" resultType="com.atguigu.spzx.model.entity.order.OrderStatistics">
+        select DATE_FORMAT(o.create_time,'%Y-%m-%d') as orderDate,
+               sum(o.total_amount) AS totalAmount,
+               count(o.id) AS totalAmount
+            FROM schema_name.order_info o
+        where date_format(o.create_time,'%Y-%m-%d')=#{creatDate}
+        GROUP BY DATE_FORMAT(o.create_time,'%Y-%m-%d')
+
+
+    </select>
+    <select id="selectOrderInfoBy" resultType="com.atguigu.spzx.model.entity.order.OrderInfo">
+        select *
+        from schema_name.order_info
+        where order_info.create_time &gt;= #{createTimeBegin}
+          and order_info.create_time &lt;= #{createTimeEnd}
+
+    </select>
+</mapper>

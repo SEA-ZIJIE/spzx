@@ -7,15 +7,15 @@ spring:
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/db_spzx?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://127.0.0.1:3306/schema_name?characterEncoding=utf-8&useSSL=false&allowPublicKeyRetrieval=true
     username: root
     password: 123456
   data:
     redis:
-      host: localhost
+      host: 127.0.0.1
       port: 6379
 mybatis:
-  mapper-locations: classpath:/mapper/*/*.xml
+  mapper-locations: classpath:/mapper/**/*.xml
   config-location: classpath:/mybatis-config.xml
 spzx:
   auth:
@@ -26,7 +26,7 @@ spzx:
       - /webjars/**
       - /swagger-resources/**
       - /v3/**
-# 自定义配置
+  # 自定义配置
   minio:
     endpointUrl: http://127.0.0.1:9000
     accessKey: minioadmin

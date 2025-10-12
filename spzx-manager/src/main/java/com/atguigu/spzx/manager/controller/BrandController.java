@@ -5,6 +5,7 @@ import com.atguigu.spzx.model.entity.product.Brand;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.github.pagehelper.PageInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import java.util.List;
  * @Create 2025/9/28 12:47
  * @Version 1.0
  */
-
+@Tag(name = "品牌管理")
 @RestController
 @RequestMapping(value = "/admin/product/brand")
 public class BrandController {

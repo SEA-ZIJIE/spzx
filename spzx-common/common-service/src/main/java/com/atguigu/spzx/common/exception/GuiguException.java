@@ -26,5 +26,8 @@ public class GuiguException extends RuntimeException {
         this.resultCodeEnum = resultCodeEnum;
         this.code = resultCodeEnum.getCode();
         this.message = resultCodeEnum.getMessage();
+
+
+
     }
  }

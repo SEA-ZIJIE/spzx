@@ -9,7 +9,20 @@
         id,brand_id,category_id,create_time,update_time,is_deleted
     </sql>
 
-<!--    //添加-->
+<!--    //根据id查询对应的品牌数据-->
+<select id="findBrandByCategoryId" resultType="com.atguigu.spzx.model.entity.product.Brand">
+select b.*
+from schema_name.category_brand cb
+  inner join schema_name. brand b on b.id = cb.brand_id
+where cb.category_id = #{categoryId}  and cb.is_deleted = 0
+order by cb.id desc
+
+</select>
+
+
+
+
+    <!--    //添加-->
     <insert id="save">
         insert into schema_name.category_brand (
             id,

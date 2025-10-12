@@ -33,6 +33,14 @@ public class ProductSpecServiceImpl implements ProductSpecService {
         List<ProductSpec> list =  productSpecMapper.findByPage();
         return new PageInfo<>(list);
     }
+
+    //查询所有商品规格
+    @Override
+    public List<ProductSpec> findAll() {
+        return productSpecMapper.findAll();
+
+    }
+
     //添加
     @Override
     public void save(ProductSpec productSpec){

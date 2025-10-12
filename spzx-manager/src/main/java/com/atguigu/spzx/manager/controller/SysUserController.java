@@ -7,6 +7,7 @@ import com.atguigu.spzx.model.entity.system.SysUser;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.github.pagehelper.PageInfo;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.annotation.Resource;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
  * @Create 2025/9/21 18:43
  * @Version 1.0
  */
-
+@Tag(name = "用户管理")
 @RestController
 @RequestMapping(value = "/admin/system/sysUser")
 public class SysUserController {
