@@ -8,27 +8,18 @@ package com.atguigu.spzx.manager.service.impl;/**
  * @Version 1.0
  */
 
-import cn.hutool.core.date.DateTime;
 import cn.hutool.core.date.DateUtil;
-import cn.hutool.json.JSONUtil;
 import com.atguigu.spzx.manager.mapper.OrderInfoMapper;
-import com.atguigu.spzx.manager.mapper.OrderStaticMapper;
 import com.atguigu.spzx.manager.mapper.OrderStatisticsMapper;
 import com.atguigu.spzx.manager.service.OrderInfoService;
 import com.atguigu.spzx.model.dto.order.OrderStatisticsDto;
-import com.atguigu.spzx.model.entity.order.OrderInfo;
 import com.atguigu.spzx.model.entity.order.OrderStatistics;
 import com.atguigu.spzx.model.vo.order.OrderStatisticsVo;
-import lombok.Data;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -40,7 +31,6 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     private final OrderInfoMapper orderInfoMapper;
 
-    private final OrderStaticMapper orderStaticMapper;
     private final OrderStatisticsMapper orderStatisticsMapper;
 //    @Override
 //    public void countOrderAll() {

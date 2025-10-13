@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager;
 
+import com.atguigu.spzx.common.log.annotation.EnableLogAspect;
 import com.atguigu.spzx.manager.properties.MinioProperties;
 import com.atguigu.spzx.manager.properties.UserProperties;
 import org.springframework.boot.SpringApplication;
