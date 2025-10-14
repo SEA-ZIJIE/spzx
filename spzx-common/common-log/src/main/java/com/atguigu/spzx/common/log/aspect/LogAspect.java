@@ -37,6 +37,9 @@ public class LogAspect {
 
         SysOperLog sysOperLog = new SysOperLog();
         LogUtil.beforeHandleLog(sysLog,joinPoint,sysOperLog);
+//        业务方法调用之前，封装数据
+
+
 //        业务方法
         Object proceed = null;
         try {
@@ -45,9 +48,13 @@ public class LogAspect {
 //            调用方法之后封装数据
             LogUtil.afterHandlLog(sysLog,proceed,sysOperLog,0,null);
         } catch (Throwable e) {
-            throw new RuntimeException(e);
-        }
+            e.printStackTrace();
+            LogUtil.afterHandlLog(sysLog,proceed,sysOperLog,1,e.getMessage());
 
+            throw new RuntimeException();
+        }
+//调用service方法添加到数据库上
+        asyncOperLogService.saveSysOperLog(sysOperLog);
         return proceed;
     }
 
