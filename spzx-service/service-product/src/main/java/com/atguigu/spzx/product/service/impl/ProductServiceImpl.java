@@ -1,6 +1,12 @@
 package com.atguigu.spzx.product.service.impl;
 
+import com.atguigu.spzx.model.entity.product.ProductSku;
+import com.atguigu.spzx.product.mapper.ProductSkuMapper;
+import com.atguigu.spzx.product.service.ProductService;
+import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * ClassName: ProductServiceImpl
@@ -13,5 +19,15 @@ import org.springframework.stereotype.Service;
  */
 
 @Service
-public class ProductServiceImpl {
+public class ProductServiceImpl implements ProductService {
+    @Resource
+    private ProductSkuMapper productSkuMapper;
+
+    @Override
+    public List<ProductSku> selectProductSkuBySale() {
+
+
+
+        return productSkuMapper.selectProductSkuBySale();
+    }
 }
