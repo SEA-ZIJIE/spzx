@@ -18,4 +18,7 @@ import java.util.List;
 public interface CategoryService {
 //    所有的一级分类
     List<Category> selectOneCategory();
+//    查询所有的分类，数信方式封装
+
+    List<Category> findCategoryTree();
 }

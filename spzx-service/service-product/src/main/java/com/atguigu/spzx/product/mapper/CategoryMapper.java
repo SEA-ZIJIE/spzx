@@ -10,5 +10,6 @@ import java.util.List;
 public interface CategoryMapper {
 //    查询所有的一级分类
     List<Category> selectOneCategory();
-
+//查询所有分类，返回list集合
+    List<Category> findAll();
 }
