@@ -27,7 +27,7 @@ public class SmsServiceImpl implements SmsService {
         String code = RandomStringUtils.randomNumeric(4);
 //        把生成的验证码放到redis，设置过期时间
 
-//        发送短信验证码
+//        发送短信验证
 
     }
 }
