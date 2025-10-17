@@ -5,6 +5,7 @@ import com.atguigu.spzx.model.entity.product.Category;
 import com.atguigu.spzx.product.mapper.CategoryMapper;
 import com.atguigu.spzx.product.service.CategoryService;
 import jakarta.annotation.Resource;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -46,6 +47,7 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryMapper.selectOneCategory();
     }
 
+    @Cacheable(value = "category",key="'all'")
     @Override
     public List<Category> findCategoryTree() {
 //        查询所有分类返回list集合
