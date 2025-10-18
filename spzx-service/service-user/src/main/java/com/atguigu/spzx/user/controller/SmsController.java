@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("api/user/sms")
+@RequestMapping("/api/user/sms")
 public class SmsController {
 @Resource
     private SmsService smsService;
