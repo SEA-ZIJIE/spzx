@@ -14,12 +14,15 @@ import com.atguigu.spzx.model.dto.h5.UserLoginDto;
 import com.atguigu.spzx.model.dto.h5.UserRegisterDto;
 import com.atguigu.spzx.model.entity.user.UserInfo;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
+import com.atguigu.spzx.model.vo.h5.UserInfoVo;
 import com.atguigu.spzx.user.mapper.UserInfoMapper;
 import com.atguigu.spzx.user.service.UserInfoService;
 import jakarta.annotation.Resource;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+import org.springframework.util.StringUtils;
 
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
@@ -79,6 +82,9 @@ public class UserInfoServiceImpl implements UserInfoService {
 
 //        根据用户名查询数据库
         UserInfo userInfo = userInfoMapper.selectByUsername(username);
+        if(userInfo==null){
+            throw new GuiguException(ResultCodeEnum.LOGIN_ERROR);
+        }
 //        比较密码是否一致
         String database_password = userInfo.getPassword();
         String md5_password = DigestUtils.md5DigestAsHex(password.getBytes());
@@ -99,6 +105,19 @@ public class UserInfoServiceImpl implements UserInfoService {
                 30, TimeUnit.DAYS);
 //        返回token
         return token;
+     }
+//    获取当前登录用户信息
+    @Override
+    public UserInfoVo getCurrentUserInfo(String token) {
+//        从redis里面获取用户信息
+        String userJson = redisTemplate.opsForValue().get("user:spzx:" + token);
+        if(!StringUtils.hasText(userJson)){
+            throw new GuiguException(ResultCodeEnum.LOGIN_AUTH);
+        }
+        UserInfo userInfo = JSON.parseObject(userJson, UserInfo.class);
+        UserInfoVo userInfoVo = new UserInfoVo();
+        BeanUtils.copyProperties(userInfo,userInfoVo);
+        return userInfoVo; 
     }
 
 }

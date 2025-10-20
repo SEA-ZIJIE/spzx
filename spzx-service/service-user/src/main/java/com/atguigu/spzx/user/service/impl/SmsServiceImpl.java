@@ -8,7 +8,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.net.http.HttpResponse;
+import org.apache.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +35,7 @@ public class SmsServiceImpl implements SmsService {
             return;
         }
 //        生成验证码
-        String code = RandomStringUtils.randomNumeric(4);
+        code = RandomStringUtils.randomNumeric(4);
 //        把生成的验证码放到redis，设置过期时间
         redisTemplate.opsForValue().set(phone,code,5, TimeUnit.MINUTES);
 //        发送短信验证码
