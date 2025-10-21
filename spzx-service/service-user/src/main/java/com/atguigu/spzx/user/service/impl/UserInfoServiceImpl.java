@@ -17,6 +17,7 @@ import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.model.vo.h5.UserInfoVo;
 import com.atguigu.spzx.user.mapper.UserInfoMapper;
 import com.atguigu.spzx.user.service.UserInfoService;
+import com.atguigu.spzx.utils.AuthContextUtil;
 import jakarta.annotation.Resource;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -110,11 +111,14 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public UserInfoVo getCurrentUserInfo(String token) {
 //        从redis里面获取用户信息
-        String userJson = redisTemplate.opsForValue().get("user:spzx:" + token);
-        if(!StringUtils.hasText(userJson)){
-            throw new GuiguException(ResultCodeEnum.LOGIN_AUTH);
-        }
-        UserInfo userInfo = JSON.parseObject(userJson, UserInfo.class);
+//        String userJson = redisTemplate.opsForValue().get("user:spzx:" + token);
+//        if(!StringUtils.hasText(userJson)){
+//            throw new GuiguException(ResultCodeEnum.LOGIN_AUTH);
+//        }
+//        UserInfo userInfo = JSON.parseObject(userJson, UserInfo.class);
+//        从threadlocal获取信息
+        UserInfo userInfo = AuthContextUtil.getUserInfo();
+
         UserInfoVo userInfoVo = new UserInfoVo();
         BeanUtils.copyProperties(userInfo,userInfoVo);
         return userInfoVo; 
