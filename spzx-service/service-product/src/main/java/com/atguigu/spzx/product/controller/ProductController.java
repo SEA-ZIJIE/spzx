@@ -1,6 +1,7 @@
 package com.atguigu.spzx.product.controller;
 
 import com.atguigu.spzx.model.dto.h5.ProductSkuDto;
+import com.atguigu.spzx.model.entity.product.ProductSku;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.product.service.ProductService;
@@ -36,9 +37,17 @@ public class ProductController {
     @GetMapping(value ="/{page}/{limit}")
     public Result<Void> list(@PathVariable Integer page,
                              @PathVariable Integer limit,
-                             ProductSkuDto productSkuDto){
-        PageInfo<ProductSkuDto> pageInfo = productService.findByPage(page,limit,productSkuDto);
+                             ProductSkuDto productSkuDto) {
+        PageInfo<ProductSkuDto> pageInfo = productService.findByPage(page, limit, productSkuDto);
         return Result.build(pageInfo, ResultCodeEnum.SUCCESS);
+    }
+//        远程调用：根据skuId返回sku信息
+        @GetMapping("/getBySkuId/{skuId}")
+        public ProductSku  getBySkuId(@PathVariable Long skuId){
+
+        ProductSku productSku =  productService.getBySkuId(skuId);
+        return productSku;
+
 
     }
 }

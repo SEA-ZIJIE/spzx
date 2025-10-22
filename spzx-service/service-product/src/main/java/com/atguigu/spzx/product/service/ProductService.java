@@ -24,5 +24,8 @@ public interface ProductService {
     List<ProductSku> selectProductSkuBySale();
 //    分页查询
     PageInfo<ProductSkuDto> findByPage(Integer page, Integer limit, ProductSkuDto productSkuDto);
+//        远程调用：根据skuId返回sku信息
+
+    ProductSku getBySkuId(Long skuId);
 
 }

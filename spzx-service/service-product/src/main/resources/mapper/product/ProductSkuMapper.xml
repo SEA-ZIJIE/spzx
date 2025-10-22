@@ -10,7 +10,18 @@
     <sql id="columns">
         id,sku_code,sku_name,product_id,thumb_img,sale_price,market_price,cost_price,stock_num,sale_num,sku_spec,weight,volume,status,create_time,update_time,is_deleted
     </sql>
-<!--分页查询-->
+
+<!--    根据id得到sku的信息-->
+
+    <select id="geiById" resultMap="productSkuMap">
+        select <include refid="columns"/>
+            from schema_name.product_sku
+        where
+            id == #{id}
+    </select>
+
+    <!--分页查询-->
+
 
     <select id="findByPage" resultMap="productSkuMap">
         select
