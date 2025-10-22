@@ -61,7 +61,7 @@ public class ProductServiceImpl implements ProductService {
 //        创建vo对象，封装数据
         ProductItemVo productItemVo = new ProductItemVo();
 
-//        根据skuId获取商品的sku信息
+//        根据skuId获取商品的sku信
 
         productSku productsku = productSkuMapper.getById(skuId);
 //        根据第二步获取sku，从sku中获取productId,获取商品信息
