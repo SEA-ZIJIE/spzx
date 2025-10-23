@@ -13,13 +13,20 @@
 
 <!--    根据id得到sku的信息-->
 
-    <select id="geiById" resultMap="productSkuMap">
+    <select id="getById" resultMap="productSkuMap">
         select <include refid="columns"/>
             from schema_name.product_sku
         where
             id == #{id}
     </select>
 
+<!--    根据商品id获取商品所有sku列表-->
+    <select id="findByProductId" resultMap="productSkuMap">
+        select <include refid="columns" />
+        from product_sku
+        where
+        product_id = #{productId}
+    </select>
     <!--分页查询-->
 
 

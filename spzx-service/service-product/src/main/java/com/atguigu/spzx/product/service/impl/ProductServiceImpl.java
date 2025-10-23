@@ -1,5 +1,6 @@
 package com.atguigu.spzx.product.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.atguigu.spzx.model.dto.h5.ProductSkuDto;
 import com.atguigu.spzx.model.entity.product.Product;
 import com.atguigu.spzx.model.entity.product.ProductDetails;
@@ -8,13 +9,14 @@ import com.atguigu.spzx.model.vo.h5.ProductItemVo;
 import com.atguigu.spzx.product.mapper.ProductDetailsMapper;
 import com.atguigu.spzx.product.mapper.ProductMapper;
 import com.atguigu.spzx.product.mapper.ProductSkuMapper;
-import com.atguigu.spzx.product.mapper.product;
 import com.atguigu.spzx.product.service.ProductService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+
 import jakarta.annotation.Resource;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -63,26 +65,43 @@ public class ProductServiceImpl implements ProductService {
 
 //        根据skuId获取商品的sku信
 
-        productSku productsku = productSkuMapper.getById(skuId);
+        ProductSku productsku = productSkuMapper.getById(skuId);
 //        根据第二步获取sku，从sku中获取productId,获取商品信息
 
         Long productId =  productsku.getProductId();
-        product product = productMapper.getById(productId);
+        Product product = productMapper.getById(productId);
 
 //        根据producId获取商品的详情信息
 
          ProductDetails productDetails = productDetailsMapper.getByProductId(productId);
 //        封装map集合 ==商品规格对应商品skuId信息
 
-        Map<String,Object> skuSpecValueMap = new HashMap<String, Object>();
+        Map<String,Object> skuSpecValueMap = new HashMap<>();
 //        根据id获取商品所有sku列表
 
-        List<Product> productSkuList =productSkuMapper.findByProductId(productId);
-
+        List<ProductSku> productSkuList =productSkuMapper.findByProductId(productId);
+        productSkuList.forEach(item ->{
+            skuSpecValueMap.put(item.getSkuSpec(),item.getId());
+        });
 //        把需要数据封装到productItemVo里面
 
+        productItemVo.setProduct(product);
+        productItemVo.setProductSku(productsku);
+        productItemVo.setSkuSpecValueMap(skuSpecValueMap);
+//封装详情图片list集合
+        String imageUrls = productDetails.getImageUrls();
+        String[] split = imageUrls.split(",");
+        List<String> list = Arrays.asList(split);
 
-        return null;
+        productItemVo.setDetailsImageUrlList(Arrays.asList(productDetails.getImageUrls().split(",")));
+//封装轮播图
+        productItemVo.setSliderUrlList(Arrays.asList(product.getSliderUrls().split(",")));
+
+//        @Schema(description = "商品规格信息")
+//        private JSONArray specValueList;
+
+        productItemVo.setSpecValueList(JSON.parseArray(product.getSpecValue()));
+        return productItemVo;
     }
 
     @Override

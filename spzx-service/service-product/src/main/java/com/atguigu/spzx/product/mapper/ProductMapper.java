@@ -1,5 +1,6 @@
 package com.atguigu.spzx.product.mapper;
 
+import com.atguigu.spzx.model.entity.product.Product;
 import org.apache.ibatis.annotations.Mapper;
 
 /**
@@ -16,5 +17,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface ProductMapper {
 
 //    从sku中获取productId,获取商品信息
-    product getById(Long productId);
+    Product getById(Long productId);
 }

@@ -9,6 +9,7 @@ package com.atguigu.spzx.product.mapper;/**
  */
 
 import com.atguigu.spzx.model.dto.h5.ProductSkuDto;
+import com.atguigu.spzx.model.entity.product.Product;
 import com.atguigu.spzx.model.entity.product.ProductSku;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -26,5 +27,9 @@ public interface ProductSkuMapper {
 
     //        根据skuId获取商品的sku信息
 
-    productSku getById(Long skuId);
+    ProductSku getById(Long skuId);
+// 根据商品id获取商品所有sku列表
+
+    List<ProductSku> findByProductId(Long productId);
+
 }
