@@ -1,4 +1,10 @@
-package com.atguigu.spzx.cart.service;/**
+package com.atguigu.spzx.cart.service;
+
+import com.atguigu.spzx.model.entity.h5.CartInfo;
+
+import java.util.List;
+
+/**
  * ClassName: CartService
  * Package: com.atguigu.spzx.cart.service
  * Description:
@@ -13,7 +19,7 @@ public interface CartService {
 //    增加购物车
     void addToCart(Long skuId, Integer skuNum);
 
-
-
+//    查询购物车
+    List<CartInfo> getCartList();
 
 }

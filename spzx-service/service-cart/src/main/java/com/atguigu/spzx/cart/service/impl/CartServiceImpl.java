@@ -2,11 +2,13 @@ package com.atguigu.spzx.cart.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.atguigu.spzx.cart.service.CartService;
+import com.atguigu.spzx.feign.product.ProductFeignClient;
 import com.atguigu.spzx.model.entity.h5.CartInfo;
 import com.atguigu.spzx.model.entity.product.ProductSku;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
 import com.atguigu.spzx.utils.AuthContextUtil;
+import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.annotation.Resource;
 import org.springframework.data.redis.core.RedisTemplate;
@@ -14,7 +16,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * ClassName: CartServiceImpl
@@ -31,6 +36,9 @@ public class CartServiceImpl implements CartService {
 
     @Resource
     private RedisTemplate<String,String> redisTemplate;
+    @Resource
+    private ProductFeignClient productFeignClient;
+
     private String getCartKey(Long userId) {
         return "user:cart:" + userId;
     }
@@ -66,7 +74,7 @@ public class CartServiceImpl implements CartService {
         cartInfo = new CartInfo();
 
         //TODO 远程调用的实现：根据skuId获取商品sku信息
-            ProductSku productSku = null;
+            ProductSku productSku = productFeignClient.getBySkuId(skuId);
 //            设置相关的数据到cartInfo里面
             cartInfo.setCartPrice(productSku.getSalePrice());
             cartInfo.setSkuNum(skuNum);
@@ -82,5 +90,27 @@ public class CartServiceImpl implements CartService {
 redisTemplate.opsForHash().put(cartKey, String.valueOf(skuId),JSON.toJSONString(cartInfo));
 
 
+    }
+//    查询购物车
+    @Override
+    public List<CartInfo> getCartList() {
+//        构建要查询的redis里面的key值，根据当前登录的用户id
+        Long userId = AuthContextUtil.getUserInfo().getId();
+        String cartKey = this.getCartKey(userId);
+
+//        根据key从redis里面hash类型获取所有value值
+
+        List<Object> valueList = redisTemplate.opsForHash().values(cartKey);
+
+        if(!CollectionUtils.isEmpty(valueList)){
+            List<CartInfo> cartInfoList = valueList.stream().map(cartInfoObj ->
+                            JSON.parseObject(cartInfoObj.toString(), CartInfo.class))
+                    .sorted((o1, o2) -> o2.getCreateTime().compareTo(o1.getCreateTime()))
+                    .collect(Collectors.toList());
+            return cartInfoList;
+
+        }
+
+        return new ArrayList<>();
     }
 }

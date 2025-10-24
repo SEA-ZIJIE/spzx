@@ -21,5 +21,4 @@ public interface ProductFeignClient {
     @GetMapping("/api/product/getBySkuId/{skuId}")
     public ProductSku getBySkuId(@PathVariable("skuId") Long skuId);
 
-
 }
