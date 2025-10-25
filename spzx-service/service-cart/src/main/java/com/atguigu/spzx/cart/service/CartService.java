@@ -21,5 +21,12 @@ public interface CartService {
 
 //    查询购物车
     List<CartInfo> getCartList();
-
+//删除购物车
+    void deleteCart(Long skuId);
+//    更新购物车商品选中状态
+void CheckCart(Long skuId, Integer isChecked);
+//    更新购物车商品全部选中状态
+    void allCheckCart(Long skuId, Integer isChecked);
+//    清空购物车
+    void clearCart();
 }
