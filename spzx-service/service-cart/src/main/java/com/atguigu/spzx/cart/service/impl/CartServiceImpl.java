@@ -150,7 +150,7 @@ redisTemplate.opsForHash().put(cartKey, String.valueOf(skuId),JSON.toJSONString(
     }
     //        更新购物车商品全部选中状态
     @Override
-    public void allCheckCart(Long skuId, Integer isChecked) {
+    public void allCheckCart(Integer isChecked) {
 
 //            构建查询的redis里面key值，根据当前userId
 
@@ -168,18 +168,18 @@ redisTemplate.opsForHash().put(cartKey, String.valueOf(skuId),JSON.toJSONString(
 
 
 //        把每个商品的isChecked进行更新
-        cartInfoList.forEach(cartInfo -> {
+            cartInfoList.forEach(cartInfo -> {
 
-            cartInfo.setIsChecked(isChecked);
-            redisTemplate.opsForHash().put(cartKey,String.valueOf(cartInfo.getSkuId()),
-                    JSON.toJSONString(cartInfo));
+                cartInfo.setIsChecked(isChecked);
+                redisTemplate.opsForHash().put(cartKey,String.valueOf(cartInfo.getSkuId()),
+                        JSON.toJSONString(cartInfo));
 
-        });
+            });
 
 
         }
-
     }
+
 
     @Override
     public void clearCart() {
@@ -191,6 +191,29 @@ redisTemplate.opsForHash().put(cartKey, String.valueOf(skuId),JSON.toJSONString(
         redisTemplate.delete(cartKey);
 
 
+    }
+
+    // 远程调用:订单结算的时候，获取购物车中选中的商品列表
+    @Override
+    public List<CartInfo> getAllChecked() {
+
+//        获取userid，构建key
+        Long userId = AuthContextUtil.getUserInfo().getId();
+        String cartKey = this.getCartKey(userId);
+
+//        根据key获取购物车里面所有的商品数据
+
+        List<Object> objectList = redisTemplate.opsForHash().values(cartKey);
+
+        if(!CollectionUtils.isEmpty(objectList)){
+            List<CartInfo> cartInfoList = objectList.stream().map(object ->
+                            JSON.parseObject(object.toString(), CartInfo.class))
+                    .filter(cartInfo -> cartInfo.getIsChecked() == 1)//选中
+                    .collect(Collectors.toList());
+            return cartInfoList;
+
+        }
+        return new ArrayList<>();
     }
 
 }

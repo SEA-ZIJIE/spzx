@@ -26,7 +26,11 @@ public interface CartService {
 //    更新购物车商品选中状态
 void CheckCart(Long skuId, Integer isChecked);
 //    更新购物车商品全部选中状态
-    void allCheckCart(Long skuId, Integer isChecked);
+    void allCheckCart(Integer isChecked);
 //    清空购物车
     void clearCart();
+    // 远程调用:订单结算的时候，获取购物车中选中的商品列表
+
+    List<CartInfo> getAllChecked();
+
 }

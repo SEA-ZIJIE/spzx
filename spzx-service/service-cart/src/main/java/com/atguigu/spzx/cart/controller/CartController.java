@@ -27,35 +27,39 @@ public class CartController {
     @Resource
     private CartService cartService;
 
-    @Operation(summary="清空购物车")
+    @Operation(summary = "清空购物车")
     @GetMapping("/auth/clearCart")
-    public Result<Void> clearCart(){
+    public Result<Void> clearCart() {
         cartService.clearCart();
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
-    @Operation(summary="更新购物车商品全部选中状态")
+
+    @Operation(summary = "更新购物车商品全部选中状态")
     @GetMapping("/auth/allCheckCart/{isChecked}")
-    public Result allCheckCart(@Parameter(name = "isChecked", description = "是否选中 1:选中 0:取消选中", required = true) @PathVariable(value = "isChecked") Integer isChecked){
+    public Result allCheckCart(@Parameter(name = "isChecked", description = "是否选中 1:选中 0:取消选中", required = true) @PathVariable(value = "isChecked") Integer isChecked) {
         cartService.allCheckCart(isChecked);
         return Result.build(null, ResultCodeEnum.SUCCESS);
     }
-    @Operation(summary="更新购物车商品选中状态")
+
+    @Operation(summary = "更新购物车商品选中状态")
     @GetMapping("/auth/checkCart/{skuId}/{isChecked}")
     public Result<Void> checkCart(@Parameter(name = "skuId", description = "商品skuId", required = true) @PathVariable(value = "skuId") Long skuId,
-                            @Parameter(name = "isChecked", description = "是否选中 1:选中 0:取消选中", required = true) @PathVariable(value = "isChecked") Integer isChecked) {
-    cartService.CheckCart(skuId,isChecked);
-    return Result.build(null,ResultCodeEnum.SUCCESS);
+                                  @Parameter(name = "isChecked", description = "是否选中 1:选中 0:取消选中", required = true) @PathVariable(value = "isChecked") Integer isChecked) {
+        cartService.CheckCart(skuId, isChecked);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
 
     }
+
     @Operation(summary = "删除购物车商品")
     @DeleteMapping("auth/deleteCart/{skuId}")
-    public Result<Void> deleteCart(@PathVariable("skuId") Long skuId){
+    public Result<Void> deleteCart(@PathVariable("skuId") Long skuId) {
         cartService.deleteCart(skuId);
-        return Result.build(null,ResultCodeEnum.SUCCESS);
+        return Result.build(null, ResultCodeEnum.SUCCESS);
     }
+
     @Operation(summary = "查询购物车")
     @GetMapping("auth/cartList")
-    public Result<Void> cartList(){
+    public Result<Void> cartList() {
         List<CartInfo> cartInfoList = cartService.getCartList();
         return Result.build(cartInfoList, ResultCodeEnum.SUCCESS);
     }
@@ -65,11 +69,20 @@ public class CartController {
 //    skuNum:商品的数量
     @Operation(summary = "添加购物车")
     @GetMapping("auth/addToCart/{skuId}/{skuNum}")
-    public Result<Void> addToCart(@PathVariable Long skuId ,
-                                  @PathVariable Integer skuNum){
-        cartService.addToCart(skuId,skuNum);
+    public Result<Void> addToCart(@PathVariable Long skuId,
+                                  @PathVariable Integer skuNum) {
+        cartService.addToCart(skuId, skuNum);
 
 
         return Result.build(null, ResultCodeEnum.SUCCESS);
+
     }
-}
+
+    // 远程调用:订单结算的时候，获取购物车中选中的商品列表
+    @Operation(summary = "选中的购物车")
+    @GetMapping(value = "/auth/getAllCkecked")
+    public List<CartInfo> getAllCkecked() {
+        List<CartInfo> list =  cartService.getAllChecked();
+        return list;
+    }
+    }
