@@ -5,6 +5,7 @@ import com.alibaba.fastjson2.JSON;
 import com.atguigu.spzx.model.entity.user.UserInfo;
 import com.atguigu.spzx.model.vo.common.Result;
 import com.atguigu.spzx.model.vo.common.ResultCodeEnum;
+import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -34,7 +35,7 @@ import java.util.List;
 
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
-    @Autowired
+    @Resource
     private RedisTemplate<String , String> redisTemplate;
 
     private AntPathMatcher antPathMatcher = new AntPathMatcher();
@@ -70,7 +71,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 //        判断token是否为空
         if(!StringUtils.isEmpty(token)) {
 //            根据token查询redis
-            redisTemplate.opsForValue().set("user:spzx:" + token):
+            redisTemplate.opsForValue().set("user:spzx:" + token);
             if (StringUtils.isEmpty(userInfoJSON)) {
                 return null;
             } else {

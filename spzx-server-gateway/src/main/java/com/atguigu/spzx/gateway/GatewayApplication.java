@@ -2,9 +2,10 @@ package com.atguigu.spzx.gateway;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cache.annotation.EnableCaching;
 
 /**
- * ClassName: ProductApplication
+ * ClassName: GatewayApplication
  * Package: com.atguigu.spzx.product
  * Description:
  *
@@ -15,10 +16,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 
 @SpringBootApplication
-    public class ProductApplication {
+@EnableCaching
+    public class GatewayApplication {
 
         public static void main(String[] args) {
-            SpringApplication.run(ProductApplication.class, args);
+            SpringApplication.run(GatewayApplication.class, args);
         }
 
     }
