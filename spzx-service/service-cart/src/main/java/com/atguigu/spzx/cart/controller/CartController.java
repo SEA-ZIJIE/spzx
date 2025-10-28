@@ -84,5 +84,18 @@ public class CartController {
     public List<CartInfo> getAllCkecked() {
         List<CartInfo> list =  cartService.getAllChecked();
         return list;
+
     }
+   //远程调用：删除生成订单的购物车商品
+    @GetMapping("/auth/deleteChecked")
+    public Result<Void> deleteChecked(){
+
+        cartService.deleteChecked();
+
+        return Result.build(null, ResultCodeEnum.SUCCESS);
+
     }
+
+
+
+}

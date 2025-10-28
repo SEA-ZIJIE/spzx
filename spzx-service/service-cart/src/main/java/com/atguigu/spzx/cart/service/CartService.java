@@ -24,13 +24,14 @@ public interface CartService {
 //删除购物车
     void deleteCart(Long skuId);
 //    更新购物车商品选中状态
-void CheckCart(Long skuId, Integer isChecked);
+    void CheckCart(Long skuId, Integer isChecked);
 //    更新购物车商品全部选中状态
     void allCheckCart(Integer isChecked);
 //    清空购物车
     void clearCart();
-    // 远程调用:订单结算的时候，获取购物车中选中的商品列表
-
+// 远程调用:订单结算的时候，获取购物车中选中的商品列表
     List<CartInfo> getAllChecked();
+//远程调用：删除生成订单的购物车商品
+    void deleteChecked();
 
 }

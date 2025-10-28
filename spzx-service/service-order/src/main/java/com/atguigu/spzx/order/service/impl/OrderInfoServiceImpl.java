@@ -3,6 +3,7 @@ package com.atguigu.spzx.order.service.impl;
 import com.atguigu.spzx.common.exception.GuiguException;
 import com.atguigu.spzx.feign.cart.CartFeignClient;
 import com.atguigu.spzx.feign.product.ProductFeignClient;
+import com.atguigu.spzx.feign.user.UserFeignClient;
 import com.atguigu.spzx.model.dto.h5.OrderInfoDto;
 import com.atguigu.spzx.model.entity.h5.CartInfo;
 import com.atguigu.spzx.model.entity.order.OrderInfo;
@@ -20,6 +21,7 @@ import com.atguigu.spzx.order.service.OrderInfoService;
 import com.atguigu.spzx.utils.AuthContextUtil;
 import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import jakarta.annotation.Resource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
@@ -53,6 +55,10 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
     @Resource
     private OrderLogMapper  orderLogMapper;
+
+    @Autowired
+    private UserFeignClient userFeignClient;
+
     //    结算接口
     @Override
     public TradeVo getTrade() {
@@ -120,8 +126,8 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
 //            封装收货信息
             Long userAddressId = orderInfoDto.getUserAddressId();
-//          ToDo:远程调用：获取收货地址Id,获取用户收货地址信息
-            UserAddress userAddress = null;
+//          远程调用：获取收货地址Id,获取用户收货地址信息
+            UserAddress userAddress = userFeignClient.getUserAddress(userAddressId);
             orderInfo.setReceiverName(userAddress.getName());
             orderInfo.setReceiverPhone(userAddress.getPhone());
             orderInfo.setReceiverTagName(userAddress.getTagName());
@@ -158,7 +164,9 @@ public class OrderInfoServiceImpl implements OrderInfoService {
             orderLog.setNote("提交订单");
             orderLogMapper.save(orderLog);
 
-//           TODO 7 把生成订单商品，从购物车删除
+//        远程调用：   7 把生成订单商品，从购物车删除
+
+        cartFeignClient.deleteChecked();
 
 //           8 返回订单id
             return orderInfo.getId();

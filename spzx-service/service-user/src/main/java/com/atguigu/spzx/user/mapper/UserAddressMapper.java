@@ -19,4 +19,7 @@ import java.util.List;
 public interface UserAddressMapper {
     //    获取用户地址列表
     List<UserAddress> findUserAddressList(Long userId);
+
+    //    根据收货地址的id获取收货地址的信息
+    UserAddress getUserAddress(Long id);
 }

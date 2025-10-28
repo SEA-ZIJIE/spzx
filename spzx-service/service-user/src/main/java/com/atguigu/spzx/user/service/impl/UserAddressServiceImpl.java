@@ -32,4 +32,11 @@ public class UserAddressServiceImpl implements UserAddressService {
 
         return userAddressMapper.findUserAddressList(userId);
     }
+
+    //    根据收货地址的id获取收货地址的信息
+    @Override
+    public UserAddress getUserAddress(Long id) {
+
+        return userAddressMapper.getUserAddress(id);
+    }
 }
