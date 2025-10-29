@@ -208,7 +208,7 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 
 //        订单里面的所有订单项
         orderInfoList.forEach(orderInfo -> {
-//           订单id查询订单里面订单项
+//           订单id查询订单里面订单
             List<OrderItem> orderItemList =  orderItemMapper.findByOrderId(orderInfo.getId());
 
         });
