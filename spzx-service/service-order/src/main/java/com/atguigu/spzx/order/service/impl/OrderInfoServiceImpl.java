@@ -19,6 +19,8 @@ import com.atguigu.spzx.order.mapper.OrderItemMapper;
 import com.atguigu.spzx.order.mapper.OrderLogMapper;
 import com.atguigu.spzx.order.service.OrderInfoService;
 import com.atguigu.spzx.utils.AuthContextUtil;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.github.xiaoymin.knife4j.core.util.CollectionUtils;
 import jakarta.annotation.Resource;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -171,6 +173,48 @@ public class OrderInfoServiceImpl implements OrderInfoService {
 //           8 返回订单id
             return orderInfo.getId();
         }
-
+//    获取订单信息
+    @Override
+    public OrderInfo getOrderInfo(Long orderId) {
+        return orderInfoMapper.getById(orderId);
     }
+//    立即购买
+    @Override
+    public TradeVo buy(Long skuId) {
+//封装订单项的结合
+        List<OrderItem> orderItemList= new ArrayList<>();
+        ProductSku productSku = productFeignClient.getBySkuId(skuId);
+        OrderItem orderItem = new OrderItem();
+        orderItem.setSkuId(skuId);
+        orderItem.setSkuName(productSku.getSkuName());
+        orderItem.setSkuNum(1);
+        orderItem.setSkuPrice(productSku.getSalePrice());
+        orderItem.setThumbImg(productSku.getThumbImg());
+        orderItemList.add(orderItem);
+
+        TradeVo tradeVo = new TradeVo();
+        tradeVo.setOrderItemList(orderItemList);
+        tradeVo.setTotalAmount(productSku.getSalePrice());
+        return tradeVo;
+    }
+//    获取订单分页列表
+    @Override
+    public PageInfo<OrderInfo> findOrderByPage(Integer page, Integer limit, Integer orderStatus) {
+        PageHelper.startPage(page, limit);
+//        查询订单信息
+        Long userId = AuthContextUtil.getUserInfo().getId();
+
+        List<OrderInfo> orderInfoList = orderInfoMapper.findUserPage(userId,orderStatus);
+
+//        订单里面的所有订单项
+        orderInfoList.forEach(orderInfo -> {
+//           订单id查询订单里面订单项
+            List<OrderItem> orderItemList =  orderItemMapper.findByOrderId(orderInfo.getId());
+
+        });
+
+        return null;
+    }
+
+}
 

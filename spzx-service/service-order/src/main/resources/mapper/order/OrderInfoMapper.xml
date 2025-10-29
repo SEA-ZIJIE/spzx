@@ -4,7 +4,15 @@
 
 <mapper namespace="com.atguigu.spzx.order.mapper.OrderInfoMapper">
 
+<!--    //    获取订单信息-->
+<select id="getById" resultType="com.atguigu.spzx.model.entity.order.OrderInfo">
+select *
+from schema_name.order_info
+where id = #{orderId}
 
+
+
+</select>
 <insert id="save" useGeneratedKeys="true" keyProperty="id">
     insert into schema_name. order_info (
         id,
