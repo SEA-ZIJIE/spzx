@@ -2,6 +2,8 @@ package com.atguigu.spzx.order.mapper;
 
 import com.atguigu.spzx.model.entity.order.OrderItem;
 
+import java.util.List;
+
 /**
  * ClassName: OrderItemMapper
  * Package: com.atguigu.spzx.order.mapper
@@ -14,8 +16,10 @@ import com.atguigu.spzx.model.entity.order.OrderItem;
 
 
 public interface OrderItemMapper {
-
-    //       添加数据到order_item表
+//       添加数据到order_item表
 
     void save(OrderItem orderItem);
+
+//           订单id查询订单里面订单
+    List<OrderItem> findByOrderId(Long orderId);
 }

@@ -210,10 +210,12 @@ public class OrderInfoServiceImpl implements OrderInfoService {
         orderInfoList.forEach(orderInfo -> {
 //           订单id查询订单里面订单
             List<OrderItem> orderItemList =  orderItemMapper.findByOrderId(orderInfo.getId());
+//            封装
+            orderInfo.setOrderItemList(orderItemList);
 
         });
 
-        return null;
+        return new PageInfo<>(orderInfoList);
     }
 
 }

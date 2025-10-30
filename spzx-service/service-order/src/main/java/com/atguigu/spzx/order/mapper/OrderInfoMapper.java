@@ -2,6 +2,8 @@ package com.atguigu.spzx.order.mapper;
 
 import com.atguigu.spzx.model.entity.order.OrderInfo;
 
+import java.util.List;
+
 /**
  * ClassName: OrderInfoMapper
  * Package: com.atguigu.spzx.order.mapper
@@ -19,4 +21,7 @@ public interface OrderInfoMapper {
 
 //    获取订单信息
     OrderInfo getById(Long orderId);
+
+//    根据用户id和状态查询订单信息
+    List<OrderInfo> findUserPage(Long userId, Integer orderStatus);
 }
