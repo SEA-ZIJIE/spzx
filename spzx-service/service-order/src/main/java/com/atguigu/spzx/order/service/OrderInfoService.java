@@ -28,4 +28,7 @@ public interface OrderInfoService {
     TradeVo buy(Long skuId);
 //    获取订单分页列表
     PageInfo<OrderInfo> findOrderByPage(Integer page, Integer limit, Integer orderStatus);
+
+    //远程调用:根据订单编号获取订单的信息
+    OrderInfo getOrderInfoByOrderNo(String orderNo);
 }
