@@ -19,17 +19,19 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
-//全局异常处理
-@ExceptionHandler(Exception.class)
-@ResponseBody
-    public Result<Void> error(){
-        return Result.build(null, ResultCodeEnum.SYSTEM_ERROR);
+    //全局异常处理
+    @ExceptionHandler(Exception.class)
+    @ResponseBody
+    public Result<Void> error(Exception e) {
+        e.printStackTrace();
+        return Result.build(null, 201, "出现了异常");
     }
-//自定义异常处理
+
+    //自定义异常处理
     @ExceptionHandler(GuiguException.class)
     @ResponseBody
-    public Result error(GuiguException e){
-    return Result.build(null, e.getResultCodeEnum());
+    public Result error(GuiguException e) {
+        return Result.build(null, e.getResultCodeEnum());
     }
 
 }

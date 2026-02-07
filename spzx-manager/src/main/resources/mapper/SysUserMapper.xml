@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.atguigu.spzx.manager.mapper.SysUserMapper">
 
     <sql id="columns">
@@ -17,7 +18,7 @@
 
     <select id="selectUserInfoByUserName" resultType="com.atguigu.spzx.model.entity.system.SysUser">
         SELECT <include refid="columns"/>
-        FROM spzx.sys_user
+        FROM  db_spzx.sys_user
         WHERE username = #{userName} AND is_deleted = 0
     </select>
 

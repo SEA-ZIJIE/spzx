@@ -12,6 +12,12 @@
         <module>spzx-common</module>
         <module>spzx-model</module>
         <module>spzx-manager</module>
+        <module>spzx-common/common-log2</module>
+        <module>spzx-server-gateway2</module>
+        <module>spzx-service2</module>
+        <module>spzx-service-client2</module>
+        <module>spzx-service-client2/service-product-client2</module>
+        <module>spzx-service-client2/service-user-client2</module>
     </modules>
     <!-- 指定父工程 -->
     <parent>
@@ -60,6 +66,18 @@
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
+
+
+            <!--导入支付宝支付sdk-->
+            <dependency>
+                <groupId>com.alipay.sdk</groupId>
+                <artifactId>alipay-sdk-java</artifactId>
+                <version>${alipay.version}</version>
+            </dependency>
+
+
+
+
         </dependencies>
     </dependencyManagement>
 </project>

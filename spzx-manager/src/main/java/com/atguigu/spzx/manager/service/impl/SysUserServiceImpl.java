@@ -1,5 +1,6 @@
 package com.atguigu.spzx.manager.service.impl;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSON;
 import com.atguigu.spzx.common.exception.GuiguException;
 import com.atguigu.spzx.manager.mapper.SysUserMapper;
@@ -34,9 +35,68 @@ public class SysUserServiceImpl implements SysUserService {
     private SysUserMapper sysUserMapper;
 
     @Resource
-    private RedisTemplate<String,String>redisTemplate;
+    private RedisTemplate<String, String> redisTemplate;
 
-    //用户登录
+    @Override
+    public LoginVo login(LoginDto loginDto) {
+
+//        根据用户名查询用户
+
+        SysUser sysUser = sysUserMapper.selectUserInfoByUserName(loginDto.getUserName());
+        if (sysUser == null) {
+            throw new GuiguException(ResultCodeEnum.LOGIN_ERROR);
+
+            /*throw new RuntimeException("用户名或密码错误");*/
+
+        }
+//        验证密码是否正确
+        String password = loginDto.getPassword();
+        DigestUtils.md5DigestAsHex(password.getBytes());
+        if (!password.equals(sysUser.getPassword())) {
+            throw new RuntimeException("用户名或密码错误");
+        }
+//        生成令牌保存到redis中
+        String token = UUID.randomUUID().toString().replace("-", "");
+        redisTemplate.opsForValue().set("user:login" + token, JSON.toJSONString(sysUser), 30, TimeUnit.MINUTES);
+
+//        构建响应结果对象
+        LoginVo loginVo = new LoginVo();
+        loginVo.setToken(token);
+        loginVo.setRefresh_token("");
+        // 校验验证码是否正确
+        String captcha = loginDto.getCaptcha();     // 用户输入的验证码
+        String codeKey = loginDto.getCodeKey();     // redis中验证码的数据key
+
+        // 从Redis中获取验证码
+        String redisCode = redisTemplate.opsForValue().get("user:login:validatecode:" + codeKey);
+        if (StrUtil.isEmpty(redisCode) || !StrUtil.equalsIgnoreCase(redisCode, captcha)) {
+            throw new GuiguException(ResultCodeEnum.VALIDATECODE_ERROR);
+        }
+
+        // 验证通过删除redis中的验证码
+        redisTemplate.delete("user:login:validatecode:" + codeKey);
+
+//        返回
+        return loginVo;
+
+    }
+
+    @Override
+    public SysUser getUserInfo(String token) {
+        String userJson = redisTemplate.opsForValue().get("user:login:" + token);
+        return JSON.parseObject(userJson , SysUser.class) ;
+    }
+    //退出功能
+
+    @Override
+    public void logout(String token) {
+        redisTemplate.delete("user:login:" + token) ;
+
+    }
+
+
+
+    /*//用户登录
     @Override
     public LoginVo login(LoginDto loginDto) {
         //1.获取用户名，loginDto获取
@@ -77,5 +137,6 @@ public class SysUserServiceImpl implements SysUserService {
         LoginVo loginVo = new LoginVo();
         loginVo.setToken(token);
         return loginVo;
-    }
+    }*/
+
 }

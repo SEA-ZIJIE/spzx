@@ -27,4 +27,8 @@ public class GuiguException extends RuntimeException {
         this.code = resultCodeEnum.getCode();
         this.message = resultCodeEnum.getMessage();
     }
+    public GuiguException(Integer code , String message) {
+        this.code = code ;
+        this.message = message ;
+    }
  }
