@@ -19,7 +19,8 @@
         <module>spzx-service-client2/service-product-client2</module>
         <module>spzx-service-client2/service-user-client2</module>
     </modules>
-    <!-- 指定父工程 -->
+
+    <!-- Spring Boot 3.0.5父依赖（正确） -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
@@ -30,54 +31,73 @@
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <mysql.verison>8.0.30</mysql.verison>
+        <!-- 修正拼写错误：mysql.version（不是mysql.verison） -->
+        <mysql.version>8.0.30</mysql.version>
         <fastjson.version>2.0.21</fastjson.version>
         <lombok.version>1.18.20</lombok.version>
+        <!-- MyBatis适配Spring Boot 3的版本 -->
         <mybatis.version>3.0.1</mybatis.version>
+        <!-- MyBatis-Plus适配Spring Boot 3的版本（必须≥3.5.4） -->
+        <mybatis-plus.version>3.5.4</mybatis-plus.version>
+        <!-- Spring Cloud Alibaba适配Spring Boot 3的版本 -->
+        <spring-cloud-alibaba.version>2022.0.0.0-RC2</spring-cloud-alibaba.version>
+        <!-- 支付宝SDK版本（补充，避免报错） -->
+        <alipay.version>4.38.0.ALL</alipay.version>
     </properties>
 
     <!-- 管理依赖，版本锁定 -->
     <dependencyManagement>
         <dependencies>
-            <!-- mybatis和spring boot整合的起步依赖 -->
+            <!-- 1. MyBatis（如果不用MP，用这个；用MP则无需单独加） -->
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>
                 <artifactId>mybatis-spring-boot-starter</artifactId>
                 <version>${mybatis.version}</version>
             </dependency>
 
-            <!-- mysql驱动 -->
+            <!-- 2. MyBatis-Plus（适配Spring Boot 3） -->
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus-boot-starter</artifactId>
+                <version>${mybatis-plus.version}</version>
+            </dependency>
+
+            <!-- 3. MySQL驱动（修正版本变量名） -->
             <dependency>
                 <groupId>mysql</groupId>
                 <artifactId>mysql-connector-java</artifactId>
                 <version>${mysql.version}</version>
             </dependency>
 
-            <!--fastjson-->
+            <!-- 4. fastjson -->
             <dependency>
                 <groupId>com.alibaba</groupId>
                 <artifactId>fastjson</artifactId>
                 <version>${fastjson.version}</version>
             </dependency>
 
-            <!-- lombok依赖 -->
+            <!-- 5. lombok -->
             <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
 
-
-            <!--导入支付宝支付sdk-->
+            <!-- 6. 支付宝支付SDK -->
             <dependency>
                 <groupId>com.alipay.sdk</groupId>
                 <artifactId>alipay-sdk-java</artifactId>
                 <version>${alipay.version}</version>
             </dependency>
 
-
-
-
+            <!-- 7. Spring Cloud Alibaba（适配Spring Boot 3） -->
+            <dependency>
+                <groupId>com.alibaba.cloud</groupId>
+                <artifactId>spring-cloud-alibaba-dependencies</artifactId>
+                <version>${spring-cloud-alibaba.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 </project>
