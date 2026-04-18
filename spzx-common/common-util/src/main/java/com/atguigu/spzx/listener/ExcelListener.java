@@ -2,7 +2,6 @@ package com.atguigu.spzx.listener;
 import com.alibaba.excel.context.AnalysisContext;
 import com.alibaba.excel.event.AnalysisEventListener;
 import com.alibaba.excel.util.ListUtils;
-//import com.atguigu.spzx.manager.mapper.CategoryMapper;
 import com.atguigu.spzx.manager.mapper.CategoryMapper;
 import com.atguigu.spzx.model.vo.product.CategoryExcelVo;
 
